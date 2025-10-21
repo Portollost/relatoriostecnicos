@@ -19,7 +19,18 @@ db_config = {
 
 # Mapeia técnicos para números de WhatsApp
 parceiros = {
-    "Gabriel Comonian Porto": "5531971538434",
+    "CAMILLA REGINA DA CRUZ": "553171538434",
+    "DALBERT EMANOEL MACHADO DOS SANTOS": "553171538434",
+    "ELIYSE DIEU DONNE MAHOUNGOU": "553171538434",
+    "ENEIAS SILVA RODRIGUES": "553171538434",
+    "LUCIANO DOS SANTOS": "553171538434",
+    "PAOLA DIENIFFER MARTINHO MENDES": "553171538434",
+    "PAULO HENRIQUE QUEIROZ ALVES": "553171538434",
+    "SAMUEL ALEXANDRE DE MELO": "553171538434",
+    "VINICIUS RESENDE DA SILVA": "553171538434",
+    "WARLEY PIMENTEL FERNANDES": "553171538434",
+    "CARLOS HENRIQUE DA SILVA SOUZA": "553171538434",
+
 }
 
 
@@ -56,40 +67,48 @@ def gerar_e_enviar_relatorios():
     # Agrupa por técnico
     relatorios_por_tecnico = {}
     for row in rows:
-        tecnico = row["NomeParceiro"] or "SEM TÉCNICO"
+        tecnico = (row["NomeParceiro"] or "SEM TÉCNICO").strip()
         relatorios_por_tecnico.setdefault(tecnico, []).append(row)
 
     data_anterior = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
 
     # Envia relatório para cada técnico
     for tecnico, atendimentos in relatorios_por_tecnico.items():
-        mensagem = f"Bom dia {tecnico}!\n"
-        mensagem += f"Segue abaixo um breve relatório do seu dia {data_anterior}:\n\nATENDIMENTOS:\n\n"
+        primeiro_nome = tecnico.strip().split()[0].capitalize()
+
+        mensagem = (
+            f"🌞 *Bom dia, {primeiro_nome}!* 🌞\n\n"
+            f"Aqui está um breve resumo dos seus atendimentos de ontem (*{data_anterior}*):\n\n"
+            f"📋 *RELATÓRIO DIÁRIO*\n\n"
+        )
 
         for i, a in enumerate(atendimentos, start=1):
             status = (
-                "(PENDENTE)" if not a["CodStatus"]
-                else "CONCLUÍDO" if a["CodStatus"] == 4
-                else "EM ANDAMENTO" if a["CodStatus"] == 3
-                else "A CONFIRMAR"
+                "⚠️ *PENDENTE*" if not a["CodStatus"] or a["CodStatus"] in [1, 3]
+                else "✅ *CONCLUÍDO*" if a["CodStatus"] == 4
+                else "⚠️ *PENDENTE*"
             )
 
-            relatorio = a["relatorio"] if a["relatorio"] else "(PENDENTE)"
-            data_ini = a["start_date"].strftime("%d/%m/%Y") if a["start_date"] else "(PENDENTE)"
-            hora_ini = a["start_time"] if a["start_time"] else "(PENDENTE)"
-            data_fim = a["end_date"].strftime("%d/%m/%Y") if a["end_date"] else "(PENDENTE)"
-            hora_fim = a["end_time"] if a["end_time"] else "(PENDENTE)"
+            relatorio = a["relatorio"] if a["relatorio"] else "⚠️ *PENDENTE*"
+            data_ini = a["start_date"].strftime("%d/%m/%Y") if a["start_date"] else "⚠️ *PENDENTE*"
+            hora_ini = a["start_time"] if a["start_time"] else "⚠️ *PENDENTE*"
+            data_fim = a["end_date"].strftime("%d/%m/%Y") if a["end_date"] else "⚠️ *PENDENTE*"
+            hora_fim = a["end_time"] if a["end_time"] else "⚠️ *PENDENTE*"
 
             mensagem += (
-                f"{i}) {a['NomeCli']}\n"
-                f"STATUS: {status}\n"
-                f"RELATÓRIO: {relatorio}\n"
-                f"DATA INÍCIO: {data_ini} {hora_ini}\n"
-                f"DATA FINALIZAÇÃO: {data_fim} {hora_fim}\n"
-                f"{'-'*90}\n\n"
+                f"*{i}) {a['NomeCli']}*\n"
+                f"• 🏷️ *Status:* {status}\n"
+                f"• 📝 *Relatório:* {relatorio}\n"
+                f"• ⏰ *Início:* {data_ini} às {hora_ini}\n"
+                f"• ✅ *Finalização:* {data_fim} às {hora_fim}\n"
+                f"─────────────────────────────\n\n"
             )
 
+        mensagem += "💪 *Vamos deixar tudo 100% atualizado hoje?*\n"
+        mensagem += "Manter seus relatórios em dia ajuda toda a equipe! 🚀"
+
         enviar_whatsapp(tecnico, mensagem)
+
 
 
 # ==========================
@@ -97,7 +116,11 @@ def gerar_e_enviar_relatorios():
 # ==========================
 
 def enviar_whatsapp(tecnico, mensagem):
-    numero = parceiros.get(tecnico)
+    tecnico_key = tecnico.strip().upper()
+    
+    # Normaliza o dicionário de parceiros
+    parceiros_normalizado = {k.strip().upper(): v for k, v in parceiros.items()}
+    numero = parceiros_normalizado.get(tecnico_key)
     if not numero:
         print(f"⚠️ Sem número de WhatsApp configurado para {tecnico}")
         return
@@ -130,6 +153,9 @@ def enviar_whatsapp(tecnico, mensagem):
 schedule.every().day.at("08:00").do(gerar_e_enviar_relatorios)
 
 print("⏰ Script agendado: enviará relatórios todos os dias às 08:00.")
+gerar_e_enviar_relatorios()
+
 while True:
     schedule.run_pending()
     time.sleep(60)
+
