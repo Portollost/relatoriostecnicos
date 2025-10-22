@@ -101,11 +101,12 @@ def gerar_e_enviar_relatorios():
                 f"• 📝 *Relatório:* {relatorio}\n"
                 f"• ⏰ *Início:* {data_ini} às {hora_ini}\n"
                 f"• ✅ *Finalização:* {data_fim} às {hora_fim}\n"
-                f"─────────────────────────────\n\n"
+                f"──────────────────────\n\n"
             )
 
         mensagem += "💪 *Vamos deixar tudo 100% atualizado hoje?*\n"
-        mensagem += "Manter seus relatórios em dia ajuda toda a equipe! 🚀"
+        mensagem += "Manter seus relatórios em dia ajuda toda a equipe! 🚀\n"
+        mensagem += "https://eugon.net.br/gestaomsw\n"
 
         enviar_whatsapp(tecnico, mensagem)
 
