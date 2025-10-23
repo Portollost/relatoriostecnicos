@@ -19,17 +19,7 @@ db_config = {
 
 # Mapeia técnicos para números de WhatsApp
 parceiros = {
-    "CAMILLA REGINA DA CRUZ": "553171538434",
-    "DALBERT EMANOEL MACHADO DOS SANTOS": "553171538434",
-    "ELIYSE DIEU DONNE MAHOUNGOU": "553171538434",
-    "ENEIAS SILVA RODRIGUES": "553171538434",
-    "LUCIANO DOS SANTOS": "553171538434",
-    "PAOLA DIENIFFER MARTINHO MENDES": "553171538434",
-    "PAULO HENRIQUE QUEIROZ ALVES": "553171538434",
-    "SAMUEL ALEXANDRE DE MELO": "553171538434",
-    "VINICIUS RESENDE DA SILVA": "553171538434",
-    "WARLEY PIMENTEL FERNANDES": "553171538434",
-    "CARLOS HENRIQUE DA SILVA SOUZA": "553171538434",
+    "WARLEY PIMENTEL FERNANDES": "5531996429179",
 
 }
 
@@ -154,7 +144,7 @@ def enviar_whatsapp(tecnico, mensagem):
 schedule.every().day.at("08:00").do(gerar_e_enviar_relatorios)
 
 print("⏰ Script agendado: enviará relatórios todos os dias às 08:00.")
-gerar_e_enviar_relatorios()
+
 
 while True:
     schedule.run_pending()
