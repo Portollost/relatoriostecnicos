@@ -26,10 +26,8 @@ parceiros = {
     "LUCIANO DOS SANTOS": "553198509880",
     "PAOLA DIENIFFER MARTINHO MENDES": "553171249097",
     "PAULO HENRIQUE QUEIROZ ALVES": "553171649433",
-    "SAMUEL ALEXANDRE DE MELO": "553171538434",
-    "VINICIUS RESENDE DA SILVA": "553172495171",
-    "WARLEY PIMENTEL FERNANDES": "553196429179",
-    "CARLOS HENRIQUE DA SILVA SOUZA": "553195059513",
+    "SAMUEL ALEXANDRE DE MELO": "553196507486",
+
 }
 
 
@@ -83,7 +81,8 @@ def gerar_e_enviar_relatorios():
 
         for i, a in enumerate(atendimentos, start=1):
             status = (
-                "⚠️ *PENDENTE*" if not a["CodStatus"] or a["CodStatus"] in [1, 3]
+                "⚠️ *PENDENTE*" if not a["CodStatus"] or a["CodStatus"] in [1, 2]
+                else "🚧 *EM ANDAMENTO*" if a["CodStatus"] == 3
                 else "✅ *CONCLUÍDO*" if a["CodStatus"] == 4
                 else "⚠️ *PENDENTE*"
             )
@@ -153,8 +152,4 @@ def enviar_whatsapp(tecnico, mensagem):
 
 print("⏰ Script agendado: enviará relatórios todos os dias às 08:00.")
 gerar_e_enviar_relatorios()
-
-while True:
-    schedule.run_pending()
-    time.sleep(60)
 
