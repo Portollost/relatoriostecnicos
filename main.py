@@ -12,16 +12,24 @@ from app.whatsapp import get_headers, get_number_id  # ✅ usa as mesmas funçõ
 # Conexão com o banco MySQL
 db_config = {
     'host': '187.73.33.163',
-    'user': 'eugon2',
+    'user': 'eugon1',
     'password': 'Master45@net',
-    'database': 'eugon2'
+    'database': 'eugon1'
 }
 
 # Mapeia técnicos para números de WhatsApp
 parceiros = {
-
-    "WARLEY PIMENTEL FERNANDES": "553171538434",
-    "CARLOS HENRIQUE DA SILVA SOUZA": "553171538434",
+    "CAMILLA REGINA DA CRUZ": "553171417867",
+    "DALBERT EMANOEL MACHADO DOS SANTOS": "553171538434",
+    "ELIYSE DIEU DONNE MAHOUNGOU": "553199374209",
+    "ENEIAS SILVA RODRIGUES": "553171538434",
+    "LUCIANO DOS SANTOS": "553198509880",
+    "PAOLA DIENIFFER MARTINHO MENDES": "553171538434",
+    "PAULO HENRIQUE QUEIROZ ALVES": "553171649433",
+    "SAMUEL ALEXANDRE DE MELO": "553171538434",
+    "VINICIUS RESENDE DA SILVA": "553172495171",
+    "WARLEY PIMENTEL FERNANDES": "553196429179",
+    "CARLOS HENRIQUE DA SILVA SOUZA": "553195059513",
 
 }
 
@@ -142,7 +150,6 @@ def enviar_whatsapp(tecnico, mensagem):
 # ==========================
 # AGENDAMENTO DIÁRIO
 # ==========================
-
 
 
 print("⏰ Script agendado: enviará relatórios todos os dias às 08:00.")
